@@ -1,0 +1,19 @@
+<section class="hero">
+    <picture>
+        <source media="(min-width: 768px)" srcset="/images/vehicles/<%= img.src %>.jpg">
+        <img alt="<%= img.alt %>" src="/images/vehicles/<%= img.src %>-tn.jpg" width="358" height="182" loading="lazy">
+    </picture>
+    <article>
+        <h2>
+            <%= content.title %>
+        </h2>
+        <ul>
+            <% content.features.forEach((feature)=> { %>
+                <li>
+                    <%= feature %>
+                </li>
+                <% }); %>
+        </ul>
+        <img src="/images/site/own_today.png" alt="Action button" width="128" height="38" loading="lazy" data-action>
+    </article>
+</section>

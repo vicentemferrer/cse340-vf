@@ -1,0 +1,17 @@
+<section class="upgrades">
+    <h3>
+        <%= title %> Upgrades
+    </h3>
+    <article>
+        <% list.forEach(({ src, alt })=> { %>
+            <a href="#">
+                <div class="card">
+                    <img src="/images/upgrades/<%= src %>" alt="<%= alt %>" width="50" height="50" loading="lazy">
+                    <p>
+                        <%= alt %>
+                    </p>
+                </div>
+            </a>
+            <% }); %>
+    </article>
+</section>

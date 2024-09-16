@@ -1,0 +1,12 @@
+<section class="reviews">
+    <h3>
+        <%= title %> Reviews
+    </h3>
+    <ul>
+        <% list.forEach(({ content, rate })=> { %>
+            <li>
+                "<%= content %>" (<%= rate %>/5)
+            </li>
+            <% }); %>
+    </ul>
+</section>

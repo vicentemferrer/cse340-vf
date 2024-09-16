@@ -1,0 +1,7 @@
+<% const d=new Date(); const year=d.getFullYear() %>
+    <footer>
+        <p class="copyright">&copy; <%= year %>, CSE 340 App</p>
+        <% if (typeof errAnchor !=='undefined' && errAnchor !==null) { %>
+            <a href=<%=`../../${errAnchor}` %> data-error-link>Error Link</a>
+            <% } %>
+    </footer>
