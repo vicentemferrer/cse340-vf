@@ -37,10 +37,10 @@ form button */
 a {
   text-decoration: none;
   color: var(--grey-400);
+}
 
-  &:hover {
-    color: var(--grey-900);
-  }
+a:hover {
+  color: var(--grey-900);
 }
 
 h1,
