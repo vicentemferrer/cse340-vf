@@ -11,70 +11,10 @@ require("dotenv").config()
 
 const app = express()
 
+const baseController = require("./controllers/baseController")
+
 const static = require("./routes/static")
-
-// Index content
-const VEHICLE = "DMC DeLorean"
-
-const index = {
-  title: "Home",
-  hero: {
-    content: {
-      title: VEHICLE,
-      features: ["3 Cup holders", "Superman doors", "Fuzzy dice!"]
-    },
-    img: {
-      alt: VEHICLE,
-      src: "delorean"
-    }
-  },
-  reviews: {
-    title: VEHICLE,
-    list: [
-      {
-        content: "So fast it's almost like traveling in time.",
-        rate: 4
-      },
-      {
-        content: "Coolest ride on the road.",
-        rate: 4
-      },
-      {
-        content: "I\'m feeling McFly!",
-        rate: 5
-      },
-      {
-        content: "The most futuristic ride of our way.",
-        rate: 4.5
-      },
-      {
-        content: "80's livin and I love it!",
-        rate: 5
-      }
-    ]
-  },
-  upgrades: {
-    title: VEHICLE,
-    list: [
-      {
-        src: "flux-cap.png",
-        alt: "Flux Capacitor"
-      },
-      {
-        src: "flame.jpg",
-        alt: "Flame Decals"
-      },
-      {
-        src: "bumper_sticker.jpg",
-        alt: "Bumper Stickers"
-      },
-      {
-        src: "hub-cap.jpg",
-        alt: "Hub Caps"
-      }
-    ]
-  }
-}
+const inventoryRoute = require("./routes/inventoryRoute")
 
 /* ***********************
  * View Engine and Templates
@@ -89,9 +29,8 @@ app.set("layout", "./layouts/layout")
 app.use(static)
 
 // Index route
-app.get("/", (req, res) => {
-  res.render("index", { ...index })
-})
+app.get("/", baseController.buildHome)
+app.use('/inv', inventoryRoute)
 
 /* ***********************
  * Local Server Information

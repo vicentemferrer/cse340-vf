@@ -259,7 +259,8 @@ section {
 }
 
 /* Classification styles*/
-/* #inv-display {
+
+#inv-display {
   grid-column: 2 / 3;
 
   display: grid;
@@ -302,9 +303,10 @@ section {
 .namePrice span {
   font-size: larger;
   font-weight: bold;
-} */
+}
 
 /* Vehicle Styles */
+
 /* #vehicle-presentation {
   display: grid;
   grid-template-columns: 1fr;
@@ -522,11 +524,13 @@ footer {
   /* #inv-display,
   form,
   .messages,
-  .management {
+  .management */
+
+  #inv-display {
     grid-column: 2 / 4;
   }
 
-  #vehicle-presentation {
+  /* #vehicle-presentation {
     grid-column-end: span 2;
 
     grid-template-columns: repeat(2, 1fr);
