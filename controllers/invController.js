@@ -19,23 +19,23 @@ invCont.buildByClassificationId = async (req, res, next) => {
     })
 }
 
-// invCont.buildByItemId = async (req, res, next) => {
-//     const item_id = req.params.itemId
-//     const data = await getInventoryItemById(item_id)
-//     const content = await utilities.buildVehicleDetailedView(data)
+invCont.buildByItemId = async (req, res, next) => {
+    const item_id = req.params.itemId
+    const data = await getInventoryItemById(item_id)
+    const content = await utilities.buildVehicleDetailedView(data)
 
-//     const nav = await utilities.getNav()
+    const nav = await utilities.getNav()
 
-//     const { make, model, year } = data[0]
+    const { make, model, year } = data[0]
 
-//     res.render("./inventory/detail", {
-//         title: `${year} ${make} ${model}`,
-//         nav,
-//         content,
-//         errAnchor: 'haha/i/got/you',
-//         errors: null
-//     })
-// }
+    res.render("inventory/detail", {
+        title: `${year} ${make} ${model}`,
+        nav,
+        content,
+        errAnchor: 'some/sunny/day',
+        errors: null
+    })
+}
 
 // invCont.buildManagement = async (req, res) => {
 //     const nav = await utilities.getNav()

@@ -41,28 +41,28 @@ Util.buildClassificationGrid = async (data) => {
     return grid
 }
 
-// Util.buildVehicleDetailedView = async (data) => {
-//     let content
-//     if (data.length > 0) {
-//         const { make, model, description, image, price, miles, color } = data[0]
-//         const makeAndModel = `${make} ${model}`
+Util.buildVehicleDetailedView = async (data) => {
+    let content
+    if (data.length > 0) {
+        const { make, model, description, image, price, miles, color } = data[0]
+        const makeAndModel = `${make} ${model}`
 
-//         content = '<section id="vehicle-presentation">'
-//         content += `<picture><img src="${image}" alt="Image of ${makeAndModel} on CSE Motors" /></picture>`
-//         content += '<article>'
-//         content += `<h2>${makeAndModel} Details</h2>`
-//         content += `<ul><li><strong>Price: $${enNumberFormat(price)}</strong></li>`
-//         content += `<li><strong>Description:</strong> ${description}</li>`
-//         content += `<li><strong>Color:</strong> ${color}</li>`
-//         content += `<li><strong>Miles:</strong> ${enNumberFormat(miles)}</li></ul>`
-//         content += '</article>'
+        content = '<section id="vehicle-presentation">'
+        content += `<picture><img src="${image}" alt="Image of ${makeAndModel} on CSE Motors" /></picture>`
+        content += '<article>'
+        content += `<h2>${makeAndModel} Details</h2>`
+        content += `<ul><li><strong>Price: $${enNumberFormat(price)}</strong></li>`
+        content += `<li><strong>Description:</strong> ${description}</li>`
+        content += `<li><strong>Color:</strong> ${color}</li>`
+        content += `<li><strong>Miles:</strong> ${enNumberFormat(miles)}</li></ul>`
+        content += '</article>'
 
-//         content += '</section>'
-//     } else {
-//         content += '<p class="notice">Sorry, no matching vehicle could be found.</p>'
-//     }
-//     return content
-// }
+        content += '</section>'
+    } else {
+        content += '<p class="notice">Sorry, no matching vehicle could be found.</p>'
+    }
+    return content
+}
 
 // Util.buildClassificationList = async (classification_id = null) => {
 //     const data = await invModel.getClassifications()
@@ -85,6 +85,6 @@ Util.buildClassificationGrid = async (data) => {
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
-// Util.handleServerErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(err => next({ status: 500, message: err.message }))
+Util.handleServerErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(err => next({ status: 500, message: err.message }))
 
 module.exports = Util
