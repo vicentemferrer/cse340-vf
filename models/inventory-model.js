@@ -18,18 +18,18 @@ async function getInventoryByClassificationId(classification_id) {
     }
 }
 
-// async function getInventoryItemById(item_id) {
-//     try {
-//         const { rows } = await pool.query(
-//             `SELECT inv_make make, inv_model model, inv_year AS year, inv_description description, inv_image image, inv_price price, inv_miles miles, inv_color color FROM public.inventory WHERE inv_id = $1`,
-//             [item_id]
-//         )
+async function getInventoryItemById(item_id) {
+    try {
+        const { rows } = await pool.query(
+            `SELECT inv_make make, inv_model model, inv_year AS year, inv_description description, inv_image image, inv_price price, inv_miles miles, inv_color color FROM public.inventory WHERE inv_id = $1`,
+            [item_id]
+        )
 
-//         return rows
-//     } catch (error) {
-//         console.error(`getitembyid error ${error}`)
-//     }
-// }
+        return rows
+    } catch (error) {
+        console.error(`getitembyid error ${error}`)
+    }
+}
 
 // async function addClassification(classification_name) {
 //     try {
@@ -65,7 +65,7 @@ async function getInventoryByClassificationId(classification_id) {
 module.exports = {
     getClassifications,
     getInventoryByClassificationId,
-    // getInventoryItemById,
+    getInventoryItemById,
     // addClassification,
     // checkExistingClassification,
     // addVehicle

@@ -11,7 +11,7 @@ const invController = require('../controllers/invController')
 // router.get('/add-vehicle', handleErrors(invController.buildAddVehicle))
 
 router.get('/type/:classificationId', handleErrors(invController.buildByClassificationId))
-// router.get('/detail/:itemId', handleErrors(invController.buildByItemId))
+router.get('/detail/:itemId', handleErrors(invController.buildByItemId))
 
 // router.post('/add-classification', classificationRules(), checkClassData, handleErrors(invController.addClassification))
 // router.post('/add-vehicle', vehicleRules(), checkVehicleData, handleErrors(invController.addVehicle))
