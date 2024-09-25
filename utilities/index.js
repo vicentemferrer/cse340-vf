@@ -4,7 +4,7 @@ const enNumberFormat = num => new Intl.NumberFormat('en-US').format(num)
 
 const Util = {}
 
-Util.getNav = async (req, res, next) => {
+Util.getNav = async () => {
     const data = await invModel.getClassifications()
 
     const list = data.reduce((acc, { id, name }, i, arr) => {
@@ -78,12 +78,12 @@ Util.buildClassificationGrid = async (data) => {
 //     return classificationList
 // }
 
-// /* ****************************************
-//  * Middleware For Handling Errors
-//  * Wrap other function in this for 
-//  * General Error Handling
-//  **************************************** */
-// Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
 // Util.handleServerErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(err => next({ status: 500, message: err.message }))
 
