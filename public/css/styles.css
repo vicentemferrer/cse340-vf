@@ -32,9 +32,8 @@ ul:not(.reviews ul, .messages ul) li {
   list-style: none;
 }
 
-/* a,
-form button */
-a {
+a,
+form button {
   text-decoration: none;
   color: var(--grey-400);
 }
@@ -340,7 +339,7 @@ section {
 
 /* Login Form Styles */
 
-/* form {
+form {
   grid-column: 2 / 3;
   justify-self: center;
 
@@ -382,16 +381,16 @@ form textarea {
 
 form label:has(#account_password) {
   position: relative;
+}
 
-  & i {
-    position: absolute;
-    top: 1.5rem;
-    right: 0;
+form label:has(#account_password) i {
+  position: absolute;
+  top: 1.5rem;
+  right: 0;
 
-    padding-right: .25rem;
+  padding-right: .25rem;
 
-    font-size: 1.25rem;
-  }
+  font-size: 1.25rem;
 }
 
 form label:has(p) p {
@@ -435,7 +434,7 @@ form button {
 form a,
 .management a {
   text-decoration: underline;
-} */
+}
 
 /* Messages and Management Styles */
 
@@ -527,7 +526,8 @@ footer {
   .management */
 
   #inv-display,
-  .messages {
+  .messages,
+  form {
     grid-column: 2 / 4;
   }
 
