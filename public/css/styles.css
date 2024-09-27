@@ -393,7 +393,8 @@ form label:has(#account_password) i {
   font-size: 1.25rem;
 }
 
-form label:has(p) p {
+form label:has(span) span {
+  display: block;
   font-size: small;
   font-style: italic;
 

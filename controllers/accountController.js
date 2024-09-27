@@ -16,18 +16,18 @@ async function buildLogin(req, res, next) {
     })
 }
 
-// /* ****************************************
-// *  Deliver registration view
-// * *************************************** */
-// async function buildRegister(req, res, next) {
-//     const nav = await getNav()
+/* ****************************************
+*  Deliver registration view
+* *************************************** */
+async function buildRegister(req, res, next) {
+    const nav = await getNav()
 
-//     res.render("account/registration", {
-//         title: "Registration",
-//         nav,
-//         errors: null
-//     })
-// }
+    res.render("account/registration", {
+        title: "Registration",
+        nav,
+        errors: null
+    })
+}
 
 // /* ****************************************
 // *  Process Registration
@@ -76,6 +76,6 @@ async function buildLogin(req, res, next) {
 
 module.exports = {
     buildLogin,
-    // buildRegister, 
+    buildRegister,
     // registerAccount 
 }

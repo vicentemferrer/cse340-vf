@@ -11,8 +11,13 @@
             </ul>
             <% } %>
 </section>
-<form action="/account/login" method="post" id="loginForm">
-    <label>Email* <input type="email" name="account_email" id="account_email" required autofocus></label>
+<form action="/account/registration" method="post">
+    <label>First name* <input type="text" name="account_firstname" id="account_firstname" required
+            value="<%= locals.account_firstname %>" autofocus></label>
+    <label>Last name* <input type="text" name="account_lastname" id="account_lastname" required
+            value="<%= locals.account_lastname %>"></label>
+    <label>Email address* <input type="email" name="account_email" id="account_email" required
+            value="<%= locals.account_email %>"></label>
     <label>Password*
         <input type="password" name="account_password" id="account_password" required
             pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
@@ -20,7 +25,5 @@
         <span>(Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special
             character)</span>
     </label>
-    <button class="dark">Login</button>
-
-    <p>No account? <a href="/account/registration">Sign-up</a></p>
+    <button class="dark">Register</button>
 </form>
