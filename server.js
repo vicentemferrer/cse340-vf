@@ -8,6 +8,7 @@
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const session = require("express-session")
+const bodyParser = require("body-parser")
 
 const { getNav, handleErrors } = require("./utilities/")
 const pool = require("./database/")
@@ -45,6 +46,9 @@ app.use((req, res, next) => {
   res.locals.messages = require("express-messages")(req, res)
   next()
 })
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 /* ***********************
  * View Engine and Templates

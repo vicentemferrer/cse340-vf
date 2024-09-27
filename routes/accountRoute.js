@@ -10,6 +10,6 @@ router.get("/login", handleErrors(accountController.buildLogin))
 router.get("/registration", handleErrors(accountController.buildRegister))
 
 // router.post("/login", loginRules(), checkLogData, (req, res) => { res.status(200).send("login process") })
-// router.post("/registration", registrationRules(), checkRegData, handleErrors(accountController.registerAccount))
+router.post("/registration", handleErrors(accountController.registerAccount))
 
 module.exports = router
