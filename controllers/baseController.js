@@ -66,6 +66,7 @@ const index = {
 
 baseController.buildHome = async (req, res) => {
     const nav = await getNav()
+
     res.render("index", {
         ...index, nav,
         errors: null

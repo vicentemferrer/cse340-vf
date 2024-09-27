@@ -28,7 +28,7 @@
 }
 
 /* ul:not(.reviews ul, .management ul, .messages ul) */
-ul:not(.reviews ul) li {
+ul:not(.reviews ul, .messages ul) li {
   list-style: none;
 }
 
@@ -439,12 +439,12 @@ form a,
 
 /* Messages and Management Styles */
 
-/* .messages,
+.messages,
 .management {
   grid-column: 2 / 3;
 }
 
-.management ul {
+/* .management ul {
   display: flex;
   flex-direction: column;
   gap: .25rem;
@@ -526,7 +526,8 @@ footer {
   .messages,
   .management */
 
-  #inv-display {
+  #inv-display,
+  .messages {
     grid-column: 2 / 4;
   }
 
