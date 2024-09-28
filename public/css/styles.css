@@ -27,8 +27,7 @@
   box-sizing: border-box;
 }
 
-/* ul:not(.reviews ul, .management ul, .messages ul) */
-ul:not(.reviews ul, .messages ul) li {
+ul:not(.reviews ul, .messages ul, .management ul) li {
   list-style: none;
 }
 
@@ -411,11 +410,11 @@ form textarea:required:invalid:focus {
   background-color: palevioletred;
 }
 
-form input[type=number]::-webkit-inner-spin-button,
+/* form input[type=number]::-webkit-inner-spin-button,
 form input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
+} */
 
 form textarea {
   height: 6rem;
@@ -444,11 +443,11 @@ form a,
   grid-column: 2 / 3;
 }
 
-/* .management ul {
+.management ul {
   display: flex;
   flex-direction: column;
   gap: .25rem;
-} */
+}
 
 /* Footer Styles */
 
@@ -521,14 +520,10 @@ footer {
     grid-auto-rows: 8rem;
   }
 
-  /* #inv-display,
-  form,
-  .messages,
-  .management */
-
   #inv-display,
   .messages,
-  form {
+  form,
+  .management {
     grid-column: 2 / 4;
   }
 
