@@ -64,19 +64,19 @@ Util.buildVehicleDetailedView = async (data) => {
     return content
 }
 
-// Util.buildClassificationList = async (classification_id = null) => {
-//     const data = await invModel.getClassifications()
+Util.buildClassificationList = async (classification_id = null) => {
+    const data = await invModel.getClassifications()
 
-//     const classificationList = data.reduce((acc, { id, name }, i, arr) => {
-//         acc += `<option value="${id}"${(classification_id !== null && id === classification_id) ? ' selected' : ''}>${name}</option>`
+    const classificationList = data.reduce((acc, { id, name }, i, arr) => {
+        acc += `<option value="${id}"${(classification_id !== null && id === classification_id) ? ' selected' : ''}>${name}</option>`
 
-//         if (i === arr.length - 1) acc += "</select>"
+        if (i === arr.length - 1) acc += "</select>"
 
-//         return acc
-//     }, '<select name="classification_id" id="classificationList" required><option value="">Choose a Classification</option>')
+        return acc
+    }, '<select name="classification_id" id="classificationList" required><option value="">Choose a Classification</option>')
 
-//     return classificationList
-// }
+    return classificationList
+}
 
 /* ****************************************
  * Middleware For Handling Errors

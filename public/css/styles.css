@@ -27,14 +27,12 @@
   box-sizing: border-box;
 }
 
-/* ul:not(.reviews ul, .management ul, .messages ul) */
-ul:not(.reviews ul) li {
+ul:not(.reviews ul, .messages ul, .management ul) li {
   list-style: none;
 }
 
-/* a,
-form button */
-a {
+a,
+form button {
   text-decoration: none;
   color: var(--grey-400);
 }
@@ -339,7 +337,7 @@ section {
 
 /* Login Form Styles */
 
-/* form {
+form {
   grid-column: 2 / 3;
   justify-self: center;
 
@@ -381,19 +379,20 @@ form textarea {
 
 form label:has(#account_password) {
   position: relative;
-
-  & i {
-    position: absolute;
-    top: 1.5rem;
-    right: 0;
-
-    padding-right: .25rem;
-
-    font-size: 1.25rem;
-  }
 }
 
-form label:has(p) p {
+form label:has(#account_password) i {
+  position: absolute;
+  top: 1.5rem;
+  right: 0;
+
+  padding-right: .25rem;
+
+  font-size: 1.25rem;
+}
+
+form label:has(span) span {
+  display: block;
   font-size: small;
   font-style: italic;
 
@@ -434,11 +433,11 @@ form button {
 form a,
 .management a {
   text-decoration: underline;
-} */
+}
 
 /* Messages and Management Styles */
 
-/* .messages,
+.messages,
 .management {
   grid-column: 2 / 3;
 }
@@ -447,7 +446,7 @@ form a,
   display: flex;
   flex-direction: column;
   gap: .25rem;
-} */
+}
 
 /* Footer Styles */
 
@@ -520,12 +519,10 @@ footer {
     grid-auto-rows: 8rem;
   }
 
-  /* #inv-display,
-  form,
+  #inv-display,
   .messages,
-  .management */
-
-  #inv-display {
+  form,
+  .management {
     grid-column: 2 / 4;
   }
 

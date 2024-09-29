@@ -7,7 +7,12 @@
  *************************/
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
+const session = require("express-session")
+const bodyParser = require("body-parser")
+
 const { getNav, handleErrors } = require("./utilities/")
+const pool = require("./database/")
+
 require("dotenv").config()
 
 const app = express()
@@ -16,7 +21,34 @@ const baseController = require("./controllers/baseController")
 
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
+const accountRoute = require("./routes/accountRoute")
 const serverErrorRoute = require("./routes/errorRoute")
+
+/* ***********************
+ * Middleware
+ *************************/
+
+app.use(session({
+  store: new (require("connect-pg-simple")(session))({
+    createTableIfMissing: true,
+    pool
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId'
+}))
+
+// Express Messages Middleware
+
+app.use(require("connect-flash")())
+app.use((req, res, next) => {
+  res.locals.messages = require("express-messages")(req, res)
+  next()
+})
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 /* ***********************
  * View Engine and Templates
@@ -34,6 +66,7 @@ app.use(static)
 app.get("/", handleErrors(baseController.buildHome))
 
 app.use('/inv', inventoryRoute)
+app.use('/account', accountRoute)
 app.use('/some', serverErrorRoute)
 
 // File Not Found Route - must be last route in list
