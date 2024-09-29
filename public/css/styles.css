@@ -410,11 +410,11 @@ form textarea:required:invalid:focus {
   background-color: palevioletred;
 }
 
-/* form input[type=number]::-webkit-inner-spin-button,
+form input[type=number]::-webkit-inner-spin-button,
 form input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
-} */
+}
 
 form textarea {
   height: 6rem;
