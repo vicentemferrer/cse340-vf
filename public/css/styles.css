@@ -63,7 +63,6 @@ body {
   background-color: var(--background);
 
   width: 100%;
-  max-width: 768px;
 
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -546,6 +545,7 @@ footer {
   #wrapper {
     margin: 3rem auto;
 
+    width: 768px;
     min-height: 100vh;
 
     border: 2px solid blue;
