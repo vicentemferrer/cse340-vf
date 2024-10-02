@@ -18,16 +18,31 @@ async function registerAccount(account_firstname, account_lastname, account_emai
  * ********************* */
 async function checkExistingEmail(account_email) {
     try {
-        const sql = "SELECT * FROM account WHERE account_email = $1"
-        const email = await pool.query(sql, [account_email])
+        const sql = "SELECT * FROM public.account WHERE account_email = $1"
+        const { rowCount } = await pool.query(sql, [account_email])
 
-        return email.rowCount
+        return rowCount
     } catch (error) {
         return error.message
     }
 }
 
+/* *****************************
+* Return account data using email address
+* ***************************** */
+async function getAccountByEmail(account_email) {
+    try {
+        const sql = "SELECT * FROM public.account WHERE account_email = $1"
+        const { rows } = await pool.query(sql, [account_email])
+
+        return rows
+    } catch (error) {
+        return new Error("No matching email found")
+    }
+}
+
 module.exports = {
     registerAccount,
-    checkExistingEmail
+    checkExistingEmail,
+    getAccountByEmail
 }

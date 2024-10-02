@@ -1,10 +1,10 @@
 const express = require('express')
 const router = new express.Router()
 
-const { handleErrors } = require('../utilities/')
+const invController = require('../controllers/invController')
 const { classificationRules, checkClassData, vehicleRules, checkVehicleData } = require('../utilities/inventory-validation')
 
-const invController = require('../controllers/invController')
+const { handleErrors } = require('../utilities/')
 
 router.get('/', handleErrors(invController.buildManagement))
 router.get('/add-classification', handleErrors(invController.buildAddClassification))

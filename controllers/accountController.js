@@ -1,7 +1,23 @@
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+
+require("dotenv").config()
 
 const accountModel = require("../models/account-model")
 const { getNav } = require("../utilities/")
+
+/* ****************************************
+*  Deliver account management view
+* *************************************** */
+async function buildManagement(req, res, next) {
+    const nav = await getNav()
+
+    res.render("account/management", {
+        title: "Account Management",
+        nav,
+        errors: null
+    })
+}
 
 /* ****************************************
 *  Deliver login view
@@ -74,8 +90,50 @@ async function registerAccount(req, res) {
     }
 }
 
+/* ****************************************
+*  Process Login
+* *************************************** */
+async function accountLogin(req, res) {
+    const nav = await getNav()
+    const { account_email, account_password } = req.body
+
+    const [accountData] = await accountModel.getAccountByEmail(account_email)
+
+    if (!accountData) {
+        req.flash("notice", "Please check your credentials and try again.")
+        res.status(400).render("account/login", {
+            title: "Login",
+            nav,
+            errors: null,
+            account_email
+        })
+
+        return
+    }
+
+    try {
+        if (await bcrypt.compare(account_password, accountData.account_password)) {
+            delete accountData.account_password
+
+            const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 })
+
+            const cookieOptions = { httpOnly: true, maxAge: 3600 * 1000 }
+
+            if (process.env.NODE_ENV !== 'development') cookieOptions.secure = true
+
+            res.cookie("jwt", accessToken, cookieOptions)
+
+            res.redirect("/account/")
+        }
+    } catch (error) {
+        return new Error('Access Forbidden')
+    }
+}
+
 module.exports = {
+    buildManagement,
     buildLogin,
     buildRegister,
-    registerAccount
+    registerAccount,
+    accountLogin
 }

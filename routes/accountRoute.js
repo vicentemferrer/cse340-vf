@@ -6,10 +6,11 @@ const { registrationRules, checkRegData, loginRules, checkLogData } = require(".
 
 const { handleErrors } = require("../utilities/")
 
+router.get("/", handleErrors(accountController.buildManagement))
 router.get("/login", handleErrors(accountController.buildLogin))
 router.get("/registration", handleErrors(accountController.buildRegister))
 
-router.post("/login", loginRules(), checkLogData, (req, res) => { res.status(200).send("login process") })
+router.post("/login", loginRules(), checkLogData, handleErrors(accountController.accountLogin))
 router.post("/registration", registrationRules(), checkRegData, handleErrors(accountController.registerAccount))
 
 module.exports = router
