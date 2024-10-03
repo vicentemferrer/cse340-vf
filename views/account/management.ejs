@@ -1,4 +1,4 @@
-<h1>You're logged in!</h1>
+<h1>Welcome <%- locals.accountData.account_firstname %>!</h1>
 <section class="messages">
     <%- messages() %>
         <% if (errors) { %>
@@ -10,4 +10,7 @@
                     <% }) %>
             </ul>
             <% } %>
+</section>
+<section class="management">
+    <p>You're logged in</p>
 </section>

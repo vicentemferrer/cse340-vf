@@ -110,6 +110,7 @@ async function accountLogin(req, res) {
     }
 
     try {
+        console.error(await bcrypt.compare(account_password, accountData.account_password))
         if (await bcrypt.compare(account_password, accountData.account_password)) {
             delete accountData.account_password
 

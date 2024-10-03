@@ -60,7 +60,7 @@ validate.checkRegData = async (req, res, next) => {
     if (!errors.isEmpty()) {
         const nav = await getNav()
 
-        res.render("account/registration", {
+        return res.render("account/registration", {
             errors,
             title: "Registration",
             nav,
@@ -68,8 +68,6 @@ validate.checkRegData = async (req, res, next) => {
             account_lastname,
             account_email,
         })
-
-        return
     }
 
     next()
@@ -116,14 +114,12 @@ validate.checkLogData = async (req, res, next) => {
     if (!errors.isEmpty()) {
         const nav = await getNav()
 
-        res.render("account/login", {
+        return res.render("account/login", {
             errors,
             title: "Login",
             nav,
             account_email
         })
-
-        return
     }
 
     next()

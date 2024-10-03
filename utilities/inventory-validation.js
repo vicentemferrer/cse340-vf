@@ -33,13 +33,11 @@ async function checkClassData(req, res, next) {
     if (!errors.isEmpty()) {
         const nav = await getNav()
 
-        res.render("inventory/add-classification", {
+        return res.render("inventory/add-classification", {
             errors,
             title: "Add Classification",
             nav
         })
-
-        return
     }
 
     next()
@@ -138,7 +136,7 @@ function vehicleRules() {
  * Check data and return errors or continue to register vehicle
  * ***************************** */
 async function checkVehicleData(req, res, next) {
-    const { classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body
+    const { classification_id, inv_make, inv_model, inv_description, inv_price, inv_year, inv_miles, inv_color } = req.body
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
@@ -146,7 +144,7 @@ async function checkVehicleData(req, res, next) {
 
         const classificationList = await buildClassificationList(classification_id)
 
-        res.render("inventory/add-vehicle", {
+        return res.render("inventory/add-vehicle", {
             errors,
             title: "Add Vehicle",
             nav,
@@ -159,8 +157,6 @@ async function checkVehicleData(req, res, next) {
             inv_miles,
             inv_color
         })
-
-        return
     }
 
     next()

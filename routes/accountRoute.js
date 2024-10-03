@@ -4,9 +4,9 @@ const router = new Router()
 const accountController = require("../controllers/accountController")
 const { registrationRules, checkRegData, loginRules, checkLogData } = require("../utilities/account-validation")
 
-const { handleErrors } = require("../utilities/")
+const { checkLogin, handleErrors } = require("../utilities/")
 
-router.get("/", handleErrors(accountController.buildManagement))
+router.get("/", checkLogin, handleErrors(accountController.buildManagement))
 router.get("/login", handleErrors(accountController.buildLogin))
 router.get("/registration", handleErrors(accountController.buildRegister))
 
