@@ -84,7 +84,7 @@ app.use(async (req, res, next) => {
 app.use(async (err, req, res, next) => {
   const nav = await getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  res.render("errors/error", {
+  return res.render("errors/error", {
     title: err.status || 'Server Error',
     message: err.status ? err.message : 'Oh no! There was a crash. Maybe try a different route?',
     nav,

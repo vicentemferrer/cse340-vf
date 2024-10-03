@@ -12,7 +12,7 @@ invCont.buildByClassificationId = async (req, res, next) => {
 
     const className = data[0].classification_name
 
-    res.render("inventory/classification", {
+    return res.render("inventory/classification", {
         title: `${className} vehicles`,
         nav,
         grid,
@@ -29,7 +29,7 @@ invCont.buildByItemId = async (req, res, next) => {
 
     const { make, model, year } = data[0]
 
-    res.render("inventory/detail", {
+    return res.render("inventory/detail", {
         title: `${year} ${make} ${model}`,
         nav,
         content,
@@ -41,7 +41,7 @@ invCont.buildByItemId = async (req, res, next) => {
 invCont.buildManagement = async (req, res) => {
     const nav = await utilities.getNav()
 
-    res.render("inventory/management", {
+    return res.render("inventory/management", {
         title: 'Vehicle Management',
         nav,
         errors: null
@@ -51,7 +51,7 @@ invCont.buildManagement = async (req, res) => {
 invCont.buildAddClassification = async (req, res) => {
     const nav = await utilities.getNav()
 
-    res.render("inventory/add-classification", {
+    return res.render("inventory/add-classification", {
         title: 'Add Classification',
         nav,
         errors: null
@@ -70,7 +70,7 @@ invCont.addClassification = async (req, res) => {
             `${classification_name} was added successfully!`
         )
 
-        res.status(201).render("inventory/management", {
+        return res.status(201).render("inventory/management", {
             title: "Vehicle Management",
             nav,
             errors: null
@@ -78,7 +78,7 @@ invCont.addClassification = async (req, res) => {
     } else {
         req.flash("notice", "Sorry, classification addition process was aborted.")
 
-        res.status(501).render("inventory/add-classification", {
+        return res.status(501).render("inventory/add-classification", {
             title: "Add Classification",
             nav,
             errors: null
@@ -91,7 +91,7 @@ invCont.buildAddVehicle = async (req, res) => {
 
     const classificationList = await utilities.buildClassificationList()
 
-    res.render("inventory/add-vehicle", {
+    return res.render("inventory/add-vehicle", {
         title: 'Add Vehicle',
         nav,
         classificationList,
@@ -113,7 +113,7 @@ invCont.addVehicle = async (req, res) => {
             `Congratulations! ${makeModel} was added successfully!`
         )
 
-        res.status(201).render("inventory/management", {
+        return res.status(201).render("inventory/management", {
             title: "Vehicle Management",
             nav,
             errors: null
@@ -121,7 +121,7 @@ invCont.addVehicle = async (req, res) => {
     } else {
         req.flash("notice", "Sorry, vehicle creation failed.")
 
-        res.status(501).render("inventory/add-vehicle", {
+        return res.status(501).render("inventory/add-vehicle", {
             title: "Add Vehicle",
             nav,
             errors: null

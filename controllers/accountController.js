@@ -12,7 +12,7 @@ const { getNav } = require("../utilities/")
 async function buildManagement(req, res, next) {
     const nav = await getNav()
 
-    res.render("account/management", {
+    return res.render("account/management", {
         title: "Account Management",
         nav,
         errors: null
@@ -25,7 +25,7 @@ async function buildManagement(req, res, next) {
 async function buildLogin(req, res, next) {
     const nav = await getNav()
 
-    res.render("account/login", {
+    return res.render("account/login", {
         title: "Login",
         nav,
         errors: null
@@ -38,7 +38,7 @@ async function buildLogin(req, res, next) {
 async function buildRegister(req, res, next) {
     const nav = await getNav()
 
-    res.render("account/registration", {
+    return res.render("account/registration", {
         title: "Registration",
         nav,
         errors: null
@@ -59,7 +59,7 @@ async function registerAccount(req, res) {
     } catch (error) {
         req.flash("notice", 'Sorry, there was an error processing the registration.')
 
-        res.status(500).render("account/registration", {
+        return res.status(500).render("account/registration", {
             title: "Registration",
             nav,
             errors: null,
@@ -74,7 +74,7 @@ async function registerAccount(req, res) {
             `Congratulations, you\'re registered ${account_firstname}. Please log in.`
         )
 
-        res.status(201).render("account/login", {
+        return res.status(201).render("account/login", {
             title: "Login",
             nav,
             errors: null
@@ -82,7 +82,7 @@ async function registerAccount(req, res) {
     } else {
         req.flash("notice", "Sorry, the registration failed.")
 
-        res.status(501).render("account/registration", {
+        return res.status(501).render("account/registration", {
             title: "Registration",
             nav,
             errors: null
@@ -101,14 +101,12 @@ async function accountLogin(req, res) {
 
     if (!accountData) {
         req.flash("notice", "Please check your credentials and try again.")
-        res.status(400).render("account/login", {
+        return res.status(400).render("account/login", {
             title: "Login",
             nav,
             errors: null,
             account_email
         })
-
-        return
     }
 
     try {
@@ -123,7 +121,7 @@ async function accountLogin(req, res) {
 
             res.cookie("jwt", accessToken, cookieOptions)
 
-            res.redirect("/account/")
+            return res.redirect("/account/")
         }
     } catch (error) {
         return new Error('Access Forbidden')
