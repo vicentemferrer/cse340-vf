@@ -38,7 +38,7 @@ invCont.buildByItemId = async (req, res, next) => {
     })
 }
 
-invCont.buildManagement = async (req, res) => {
+invCont.buildManagementView = async (req, res) => {
     const nav = await utilities.getNav()
     const classificationSelect = await utilities.buildClassificationList()
 
@@ -50,7 +50,7 @@ invCont.buildManagement = async (req, res) => {
     })
 }
 
-invCont.buildAddClassification = async (req, res) => {
+invCont.addClassificationView = async (req, res) => {
     const nav = await utilities.getNav()
 
     return res.render("inventory/add-classification", {
@@ -88,7 +88,7 @@ invCont.addClassification = async (req, res) => {
     }
 }
 
-invCont.buildAddVehicle = async (req, res) => {
+invCont.addInventoryView = async (req, res) => {
     const nav = await utilities.getNav()
 
     const classificationList = await utilities.buildClassificationList()
@@ -132,13 +132,42 @@ invCont.addVehicle = async (req, res) => {
 }
 
 invCont.getInventoryJSON = async (req, res, next) => {
-    const classification_id = parseInt(req.params.classification_id)
+    const classification_id = parseInt(req.params.classificationId)
     const invData = await getInventoryByClassificationId(classification_id)
+
     if (invData[0].id) {
         return res.json(invData)
     } else {
         next(new Error("No data returned"))
     }
+}
+
+invCont.editInventoryView = async (req, res) => {
+    const inv_id = parseInt(req.params.itemId)
+
+    const nav = await utilities.getNav()
+    const [itemData] = await getInventoryItemById(inv_id)
+    const classificationList = await utilities.buildClassificationList(itemData.classId)
+
+    const itemName = `${itemData.make} ${itemData.model}`
+
+    return res.render("inventory/edit-vehicle", {
+        title: `Edit ${itemName}`,
+        nav,
+        classificationList,
+        inv_id: itemData.id,
+        inv_make: itemData.make,
+        inv_model: itemData.model,
+        inv_year: itemData.year,
+        inv_description: itemData.description,
+        inv_image: itemData.image,
+        inv_thumbnail: itemData.thumbnail,
+        inv_price: itemData.price,
+        inv_miles: itemData.miles,
+        inv_color: itemData.color,
+        classification_id: itemData.classId,
+        errors: null
+    })
 }
 
 module.exports = invCont

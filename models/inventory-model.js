@@ -21,7 +21,7 @@ async function getInventoryByClassificationId(classification_id) {
 async function getInventoryItemById(item_id) {
     try {
         const { rows } = await pool.query(
-            `SELECT inv_make make, inv_model model, inv_year AS year, inv_description description, inv_image image, inv_price price, inv_miles miles, inv_color color FROM public.inventory WHERE inv_id = $1`,
+            `SELECT inv_id id, inv_make make, inv_model model, inv_year AS year, inv_description description, inv_image image, inv_thumbnail thumbnail, inv_price price, inv_miles miles, inv_color color, classification_id classId FROM public.inventory WHERE inv_id = $1`,
             [item_id]
         )
 
