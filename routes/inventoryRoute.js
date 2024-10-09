@@ -2,7 +2,7 @@ const express = require('express')
 const router = new express.Router()
 
 const invController = require('../controllers/invController')
-const { classificationRules, checkClassData, vehicleRules, checkVehicleData } = require('../utilities/inventory-validation')
+const { classificationRules, checkClassData, vehicleRules, checkVehicleData, updateRules, checkUpdateData } = require('../utilities/inventory-validation')
 
 const { handleErrors } = require('../utilities/')
 
@@ -19,5 +19,6 @@ router.get('/getInventory/:classificationId', handleErrors(invController.getInve
 
 router.post('/add-classification', classificationRules(), checkClassData, handleErrors(invController.addClassification))
 router.post('/add-vehicle', vehicleRules(), checkVehicleData, handleErrors(invController.addVehicle))
+router.post("/update", updateRules(), checkUpdateData, handleErrors(invController.updateInventory))
 
 module.exports = router

@@ -12,7 +12,7 @@
                 </ul>
                 <% } %>
     </section>
-    <form action="/inv/update" method="post">
+    <form action="/inv/update" method="post" id="updateForm">
         <label>Classification*
             <%- classificationList %>
         </label>
@@ -21,19 +21,18 @@
                 required>
         </label>
         <label>Model*
-            <input type="text" name="inv_model" id="inv_model" pattern="^[A-Za-z]{3,}$" value="<%- locals.inv_model %>"
-                required>
+            <input type="text" name="inv_model" id="inv_model" pattern="^[A-Za-z\s]{3,}$"
+                value="<%- locals.inv_model %>" required>
         </label>
         <label>Description*
             <textarea name="inv_description" id="inv_description" minlength="1"
                 required><%- locals.inv_description %></textarea>
         </label>
         <label>Image Path*
-            <input type="text" name="inv_image" id="inv_image" value="<%- locals.inv_image %>" required disabled>
+            <input type="text" name="inv_image" id="inv_image" value="<%- locals.inv_image %>" required>
         </label>
         <label>Thumbnail Path*
-            <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="<%- locals.inv_thumbnail %>" required
-                disabled>
+            <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="<%- locals.inv_thumbnail %>" required>
         </label>
         <label>Price*
             <input type="number" name="inv_price" id="inv_price" step="any" value="<%- locals.inv_price %>" required>
@@ -49,5 +48,8 @@
             <input type="text" name="inv_color" id="inv_color" pattern="^[A-Za-z]{3,}$" value="<%- locals.inv_color %>"
                 required>
         </label>
-        <button class="dark">Update Vehicle</button>
+        <button class="dark" disabled>Update Vehicle</button>
+        <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" <% } %>>
     </form>
+
+    <script type="module" src="../../../js/inv-update.js"></script>

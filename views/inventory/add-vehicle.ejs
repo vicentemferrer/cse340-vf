@@ -21,8 +21,8 @@
                 required>
         </label>
         <label>Model*
-            <input type="text" name="inv_model" id="inv_model" pattern="^[A-Za-z]{3,}$" value="<%- locals.inv_model %>"
-                required>
+            <input type="text" name="inv_model" id="inv_model" pattern="^[A-Za-z\s]{3,}$"
+                value="<%- locals.inv_model %>" required>
         </label>
         <label>Description*
             <textarea name="inv_description" id="inv_description" minlength="1"

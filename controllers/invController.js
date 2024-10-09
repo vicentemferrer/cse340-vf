@@ -1,4 +1,4 @@
-const { getInventoryByClassificationId, getInventoryItemById, addClassification, addVehicle } = require('../models/inventory-model')
+const { getInventoryByClassificationId, getInventoryItemById, addClassification, addVehicle, updateInventory } = require('../models/inventory-model')
 const utilities = require('../utilities')
 
 const invCont = {}
@@ -168,6 +168,56 @@ invCont.editInventoryView = async (req, res) => {
         classification_id: itemData.classId,
         errors: null
     })
+}
+
+invCont.updateInventory = async (req, res, next) => {
+    const nav = await utilities.getNav()
+    const { inv_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id } = req.body
+
+    const [updateResult] = await updateInventory(
+        inv_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color,
+        classification_id
+    )
+
+    if (updateResult) {
+        const itemName = `${updateResult.inv_make} ${updateResult.inv_model}`
+
+        req.flash("notice", `The ${itemName} was successfully updated.`)
+
+        return res.redirect("/inv")
+    } else {
+        const classificationList = await utilities.buildClassificationList(classification_id)
+        const itemName = `${inv_make} ${inv_model}`
+
+        req.flash("notice", "Sorry, the insert failed.")
+
+        return res.status(501).render("inventory/edit-inventory", {
+            title: `Edit ${itemName}`,
+            nav,
+            classificationList,
+            errors: null,
+            inv_id,
+            inv_make,
+            inv_model,
+            inv_year,
+            inv_description,
+            inv_image,
+            inv_thumbnail,
+            inv_price,
+            inv_miles,
+            inv_color,
+            classification_id
+        })
+    }
 }
 
 module.exports = invCont
