@@ -10,6 +10,8 @@ router.get("/", checkLogin, handleErrors(accountController.buildManagement))
 router.get("/login", handleErrors(accountController.buildLogin))
 router.get("/registration", handleErrors(accountController.buildRegister))
 
+router.get("/logout", handleErrors(accountController.accountLogout))
+
 router.post("/login", loginRules(), checkLogData, handleErrors(accountController.accountLogin))
 router.post("/registration", registrationRules(), checkRegData, handleErrors(accountController.registerAccount))
 

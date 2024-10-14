@@ -129,10 +129,19 @@ async function accountLogin(req, res) {
     }
 }
 
+async function accountLogout(req, res) {
+    res.clearCookie('jwt')
+
+    req.flash('notice', 'See you soon!')
+
+    return res.redirect('/')
+}
+
 module.exports = {
     buildManagement,
     buildLogin,
     buildRegister,
     registerAccount,
-    accountLogin
+    accountLogin,
+    accountLogout
 }

@@ -102,6 +102,16 @@ header {
   font-family: sans-serif;
 }
 
+#tools.logged {
+  padding-inline: 1rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
 /* Navigation Styles */
 
 nav {
