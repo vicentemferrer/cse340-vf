@@ -21,7 +21,7 @@
                 required>
         </label>
         <label>Model*
-            <input type="text" name="inv_model" id="inv_model" pattern="^[A-Za-z\s]{3,}$"
+            <input type="text" name="inv_model" id="inv_model" pattern="^[A-Za-z\s\d]{3,}$"
                 value="<%- locals.inv_model %>" required>
         </label>
         <label>Description*
@@ -29,11 +29,11 @@
                 required><%- locals.inv_description %></textarea>
         </label>
         <label>Image Path*
-            <input type="text" name="inv_image" id="inv_image" value="/images/vehicles/no-image.png" required disabled>
+            <input type="text" name="inv_image" id="inv_image" value="/images/vehicles/no-image.png" required>
         </label>
         <label>Thumbnail Path*
-            <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="/images/vehicles/no-image-tn.png" required
-                disabled>
+            <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="/images/vehicles/no-image-tn.png"
+                required>
         </label>
         <label>Price*
             <input type="number" name="inv_price" id="inv_price" step="any" value="<%- locals.inv_price %>" required>

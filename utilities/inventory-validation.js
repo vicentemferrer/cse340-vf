@@ -163,7 +163,7 @@ async function checkVehicleData(req, res, next) {
 }
 
 /*  **********************************
-  *  Inventory Update Data Validation Rules
+  * Update Data Validation Rules
   * ********************************* */
 
 function updateRules() {
@@ -293,4 +293,89 @@ async function checkUpdateData(req, res, next) {
     next()
 }
 
-module.exports = { classificationRules, checkClassData, vehicleRules, checkVehicleData, updateRules, checkUpdateData }
+/*  **********************************
+  *  Delete Data Validation Rules
+  * ********************************* */
+
+function deleteRules() {
+    return ([
+        body("inv_make")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isLength({ min: 3 })
+            .withMessage("Please provide a maker."),
+
+        body("inv_model")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isLength({ min: 3 })
+            .withMessage("Please provide a model."),
+
+        body("inv_price")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isFloat({
+                gt: 0,
+                locale: 'en-US'
+            })
+            .withMessage("Please provide a price."),
+
+        body("inv_year")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isInt({
+                min: 1900,
+                max: new Date().getFullYear(),
+            })
+            .withMessage("Please provide a year."),
+
+        body("inv_id")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isInt({
+                gt: 0
+            })
+            .withMessage("Invalid inventory ID.")
+    ])
+}
+
+/* ******************************
+ * Check data and return errors or continue to delete vehicle
+ * ***************************** */
+async function checkDeleteData(req, res, next) {
+    const { inv_make, inv_model, inv_price, inv_year, inv_id } = req.body
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        const nav = await getNav()
+
+        return res.render("inventory/edit-vehicle", {
+            errors,
+            title: `Confirm Deletion`,
+            nav,
+            inv_make,
+            inv_model,
+            inv_price,
+            inv_year,
+            inv_id
+        })
+    }
+
+    next()
+}
+
+module.exports = {
+    classificationRules,
+    checkClassData,
+    vehicleRules,
+    checkVehicleData,
+    updateRules,
+    checkUpdateData,
+    deleteRules,
+    checkDeleteData
+}

@@ -7,10 +7,10 @@ function buildInventoryList(data) {
     const dataTable = data.reduce((acc, { id, model, make }, i, arr) => {
         console.log(id + ", " + model);
         acc += `<tr><td>${make} ${model}</td>`;
-        acc += `<td><a href='/inv/edit/${id}' title='Click to update'><i class="fi fi-br-pencil"></i>Modify</a></td>`;
-        acc += `<td><a href='/inv/delete/${id}' title='Click to delete'><i class="fi fi-br-trash"></i>Delete</a></td></tr>`;
+        acc += `<td><a href='/inv/edit/${id}' title='Click to update' data-update><i class="fi fi-br-pencil"></i>Modify</a></td>`;
+        acc += `<td><a href='/inv/delete/${id}' title='Click to delete' data-delete><i class="fi fi-br-trash"></i>Delete</a></td></tr>`;
 
-        acc += i === arr.length - 1 && '</tbody>';
+        if (i === arr.length - 1) acc += '</tbody>';
 
         return acc
     }, '<thead><tr><th>Vehicle Name</th><td>&nbsp;</td><td>&nbsp;</td></tr></thead><tbody>')
