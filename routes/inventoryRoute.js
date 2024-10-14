@@ -1,19 +1,26 @@
 const express = require('express')
 const router = new express.Router()
 
-const { handleErrors } = require('../utilities/')
-const { classificationRules, checkClassData, vehicleRules, checkVehicleData } = require('../utilities/inventory-validation')
-
 const invController = require('../controllers/invController')
+const { classificationRules, checkClassData, vehicleRules, checkVehicleData, updateRules, checkUpdateData, deleteRules, checkDeleteData } = require('../utilities/inventory-validation')
 
-router.get('/', handleErrors(invController.buildManagement))
-router.get('/add-classification', handleErrors(invController.buildAddClassification))
-router.get('/add-vehicle', handleErrors(invController.buildAddVehicle))
+const { handleErrors } = require('../utilities/')
+
+router.get('/', handleErrors(invController.buildManagementView))
+router.get('/add-classification', handleErrors(invController.addClassificationView))
+router.get('/add-vehicle', handleErrors(invController.addInventoryView))
+
+router.get('/edit/:itemId', handleErrors(invController.editInventoryView))
+router.get('/delete/:itemId', handleErrors(invController.confirmDeletionView))
 
 router.get('/type/:classificationId', handleErrors(invController.buildByClassificationId))
 router.get('/detail/:itemId', handleErrors(invController.buildByItemId))
 
-router.post('/add-classification', classificationRules(), checkClassData, handleErrors(invController.addClassification));
-router.post('/add-vehicle', vehicleRules(), checkVehicleData, handleErrors(invController.addVehicle));
+router.get('/getInventory/:classificationId', handleErrors(invController.getInventoryJSON))
+
+router.post('/add-classification', classificationRules(), checkClassData, handleErrors(invController.addClassification))
+router.post('/add-vehicle', vehicleRules(), checkVehicleData, handleErrors(invController.addVehicle))
+router.post("/update", updateRules(), checkUpdateData, handleErrors(invController.updateInventory))
+router.post("/delete", deleteRules(), checkDeleteData, handleErrors(invController.deleteVehicle))
 
 module.exports = router

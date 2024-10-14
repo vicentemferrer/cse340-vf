@@ -363,13 +363,13 @@ form textarea {
 
 form input,
 form button,
-form select,
+select,
 form textarea {
   font-size: large;
 }
 
 form input,
-form select,
+select,
 form textarea {
   padding: .25rem;
 
@@ -446,6 +446,38 @@ form a,
   display: flex;
   flex-direction: column;
   gap: .25rem;
+}
+
+/* Management Table */
+
+.management:has(table) {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.management select {
+  width: fit-content;
+}
+
+.management table {
+  width: 100%;
+}
+
+.management table tr {
+  padding-block: 1rem;
+}
+
+.management table td:has(a) {
+  text-align: center;
+}
+
+[data-update]:hover {
+  color: darkolivegreen;
+}
+
+[data-delete]:hover {
+  color: palevioletred;
 }
 
 /* Footer Styles */

@@ -1,0 +1,16 @@
+<h1>Welcome <%- locals.accountData.account_firstname %>!</h1>
+<section class="messages">
+    <%- messages() %>
+        <% if (errors) { %>
+            <ul class="notice">
+                <% errors.array().forEach(error=> { %>
+                    <li>
+                        <%= error.msg %>
+                    </li>
+                    <% }) %>
+            </ul>
+            <% } %>
+</section>
+<section class="management">
+    <p>You're logged in</p>
+</section>

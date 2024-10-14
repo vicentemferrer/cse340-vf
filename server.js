@@ -9,8 +9,9 @@ const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const session = require("express-session")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
 
-const { getNav, handleErrors } = require("./utilities/")
+const { getNav, checkJWTToken, handleErrors } = require("./utilities/")
 const pool = require("./database/")
 
 require("dotenv").config()
@@ -27,7 +28,6 @@ const serverErrorRoute = require("./routes/errorRoute")
 /* ***********************
  * Middleware
  *************************/
-
 app.use(session({
   store: new (require("connect-pg-simple")(session))({
     createTableIfMissing: true,
@@ -40,7 +40,6 @@ app.use(session({
 }))
 
 // Express Messages Middleware
-
 app.use(require("connect-flash")())
 app.use((req, res, next) => {
   res.locals.messages = require("express-messages")(req, res)
@@ -49,6 +48,10 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(cookieParser())
+
+app.use(checkJWTToken)
 
 /* ***********************
  * View Engine and Templates
@@ -81,7 +84,7 @@ app.use(async (req, res, next) => {
 app.use(async (err, req, res, next) => {
   const nav = await getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  res.render("errors/error", {
+  return res.render("errors/error", {
     title: err.status || 'Server Error',
     message: err.status ? err.message : 'Oh no! There was a crash. Maybe try a different route?',
     nav,

@@ -1,0 +1,35 @@
+<% const d=new Date(); const year=d.getFullYear() %>
+    <h1><%- title %></h1>
+    <section class="messages">
+        <%- messages() %>
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+    </section>
+    <form action="/inv/delete" method="post">
+        <label>Make*
+            <input type="text" name="inv_make" id="inv_make" pattern="^[A-Za-z]{3,}$" value="<%- locals.inv_make %>"
+                required readonly>
+        </label>
+        <label>Model*
+            <input type="text" name="inv_model" id="inv_model" pattern="^[A-Za-z\s\d]{3,}$"
+                value="<%- locals.inv_model %>" required readonly>
+        </label>
+        <label>Price*
+            <input type="number" name="inv_price" id="inv_price" step="any" value="<%- locals.inv_price %>" required
+                readonly>
+        </label>
+        <label>Year*
+            <input type="number" name="inv_year" id="inv_year" min="1900" max="<%- year %>"
+                value="<%- locals.inv_year %>" required readonly>
+        </label>
+        <p>THE DELETE IS PERMANENT.</p>
+        <button class="dark">Delete Vehicle</button>
+        <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" <% } %>>
+    </form>
