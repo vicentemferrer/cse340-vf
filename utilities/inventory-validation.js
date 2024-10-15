@@ -354,7 +354,7 @@ async function checkDeleteData(req, res, next) {
     if (!errors.isEmpty()) {
         const nav = await getNav()
 
-        return res.render("inventory/edit-vehicle", {
+        return res.render("inventory/delete-confirm", {
             errors,
             title: `Confirm Deletion`,
             nav,

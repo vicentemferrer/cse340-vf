@@ -1,4 +1,5 @@
-<h1>Welcome <%- locals.accountData.account_firstname %>!</h1>
+<h1>Account Management</h1>
+<h2>Welcome <%- locals.accountData.account_firstname %>!</h2>
 <section class="messages">
     <%- messages() %>
         <% if (errors) { %>
@@ -12,5 +13,12 @@
             <% } %>
 </section>
 <section class="management">
-    <p>You're logged in</p>
+    <h3>Manage Account</h3>
+    <p><a href="/account/update">Access <i class="fi fi-br-arrow-up-right-from-square"></i></a></p>
 </section>
+<% if (locals.accountData.account_type !=='Client' ) { %>
+    <section class="management">
+        <h3>Manage Inventory</h3>
+        <p><a href="/inv">Access <i class="fi fi-br-arrow-up-right-from-square"></i></a></p>
+    </section>
+    <% } %>

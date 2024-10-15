@@ -111,6 +111,15 @@ Util.checkLogin = async (req, res, next) => {
     next()
 }
 
+Util.checkCredentials = async (req, res, next) => {
+    if (!res.locals.loggedin || res.locals.accountData["account_type"] === 'Client') {
+        req.flash("notice", "Please log with appropriate credentials.")
+        return res.redirect("/account/login")
+    }
+
+    next()
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
