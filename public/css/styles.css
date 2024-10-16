@@ -106,8 +106,7 @@ header {
   padding-inline: .5rem;
 
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  flex-direction: column;
   align-items: center;
   gap: .25rem;
 }
@@ -537,6 +536,8 @@ footer {
   #tools.logged {
     padding-inline: 1rem;
 
+    flex-direction: row;
+    justify-content: flex-end;
     gap: 1.5rem;
   }
 
