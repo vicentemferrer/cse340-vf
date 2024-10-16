@@ -111,6 +111,10 @@ header {
   gap: .25rem;
 }
 
+#tools.logged>* {
+  text-align: center;
+}
+
 #tools.logged h3 {
   width: fit-content;
 }
