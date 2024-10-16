@@ -29,7 +29,7 @@ Util.buildClassificationGrid = async (data) => {
             const makeAndModel = `${make} ${model}`
 
             acc += '<li>'
-            acc += `<a href="../../inv/detail/${id}" title="View ${makeAndModel} details"><img src="${thumbnail}" alt="Image of ${makeAndModel} on CSE Motors" /></a>`
+            acc += `<a href="../../inv/detail/${id}" title="View ${makeAndModel} details"><img src="${thumbnail}" alt="Image of ${makeAndModel} on CSE Motors" loading="lazy" /></a>`
             acc += '<div class="namePrice">'
             acc += '<hr />'
             acc += `<h2><a href="../../inv/detail/${id}" title="View ${makeAndModel} details">${makeAndModel}</a></h2>`
@@ -52,7 +52,7 @@ Util.buildVehicleDetailedView = async (data) => {
         const makeAndModel = `${make} ${model}`
 
         content = '<section id="vehicle-presentation">'
-        content += `<picture><img src="${image}" alt="Image of ${makeAndModel} on CSE Motors" /></picture>`
+        content += `<picture><img src="${image}" alt="Image of ${makeAndModel} on CSE Motors" loading="lazy" /></picture>`
         content += '<article>'
         content += `<h2>${makeAndModel} Details</h2>`
         content += `<ul><li><strong>Price: $${enNumberFormat(price)}</strong></li>`

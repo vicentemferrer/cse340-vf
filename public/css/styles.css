@@ -103,13 +103,17 @@ header {
 }
 
 #tools.logged {
-  padding-inline: 1rem;
+  padding-inline: .5rem;
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  gap: 1.5rem;
+  gap: .25rem;
+}
+
+#tools.logged h3 {
+  width: fit-content;
 }
 
 /* Navigation Styles */
@@ -530,6 +534,12 @@ footer {
 /* Media Queries */
 
 @media (767px < width) {
+  #tools.logged {
+    padding-inline: 1rem;
+
+    gap: 1.5rem;
+  }
+
   nav ul {
     justify-content: space-evenly;
     gap: 1.5rem;
