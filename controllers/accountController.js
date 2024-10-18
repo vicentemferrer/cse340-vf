@@ -98,11 +98,7 @@ async function registerAccount(req, res) {
             `Congratulations, you\'re registered ${account_firstname}. Please log in.`
         )
 
-        return res.status(201).render("account/login", {
-            title: "Login",
-            nav,
-            errors: null
-        })
+        return res.status(201).redirect('/account/login')
     } else {
         req.flash("notice", "Sorry, the registration failed.")
 
@@ -145,7 +141,7 @@ async function accountLogin(req, res) {
 
             res.cookie("jwt", accessToken, cookieOptions)
 
-            return res.redirect("/account/")
+            return res.redirect("/account")
         }
     } catch (error) {
         return new Error('Access Forbidden')
@@ -185,7 +181,7 @@ async function updateAccount(req, res) {
 }
 
 /* ****************************************
-*  Process Update
+*  Process Change Password
 * *************************************** */
 async function changePassword(req, res) {
     const { account_id, account_password } = req.body

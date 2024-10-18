@@ -66,19 +66,12 @@ invCont.addClassification = async (req, res) => {
     const classResult = await addClassification(classification_name)
 
     if (classResult) {
-        const classificationList = await utilities.buildClassificationList()
-
         req.flash(
             "notice",
             `${classification_name} was added successfully!`
         )
 
-        return res.status(201).render("inventory/management", {
-            title: "Vehicle Management",
-            nav,
-            classificationList,
-            errors: null
-        })
+        return res.status(201).redirect('/inv')
     } else {
         req.flash("notice", "Sorry, classification addition process was aborted.")
 
@@ -112,20 +105,12 @@ invCont.addVehicle = async (req, res) => {
     const makeModel = `${inv_make} ${inv_model}`
 
     if (vehicleResult) {
-        const classificationList = await utilities.buildClassificationList()
-
-
         req.flash(
             "notice",
             `Congratulations! ${makeModel} was added successfully!`
         )
 
-        return res.status(201).render("inventory/management", {
-            title: "Vehicle Management",
-            nav,
-            classificationList,
-            errors: null
-        })
+        return res.status(201).redirect('/inv')
     } else {
         const classificationList = await utilities.buildClassificationList(classification_id)
 
