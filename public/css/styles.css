@@ -381,9 +381,10 @@ form {
 }
 
 form label,
-form input,
+form input:not(.sbs),
 form select,
-form textarea {
+form textarea,
+form fieldset {
   width: 100%;
 
   display: block;
@@ -398,7 +399,8 @@ form textarea {
 
 form input,
 select,
-form textarea {
+form textarea,
+form fieldset {
   padding: .25rem;
 
   border: 2px solid var(--grey-900);
@@ -499,6 +501,23 @@ form a,
 
 .management table td:has(a) {
   text-align: center;
+}
+
+.management table td.state {
+  font-size: small;
+}
+
+.management table td.state span {
+  display: block;
+  width: fit-content;
+
+  padding: .25rem .5rem;
+
+  border: 1px black solid;
+  border-radius: 1rem;
+
+  color: white;
+  background-color: darkorange;
 }
 
 [data-update]:hover {

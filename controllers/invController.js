@@ -1,11 +1,12 @@
-const { getInventoryByClassificationId, getInventoryItemById, addClassification, addVehicle, updateInventory, deleteVehicle } = require('../models/inventory-model')
+const { getInventoryByClassificationId, getInventoryApprovedByClassificationId, getInventoryItemById, addClassification, addVehicle, updateInventory, deleteVehicle, getInventoryToApprove, getClassificationsToApprove, confirmInventory, getClassificationById, deleteClassification, confirmClassification } = require('../models/inventory-model')
 const utilities = require('../utilities')
+const { TableListSettings } = require('../utilities/TableListSettingsClass.js')
 
 const invCont = {}
 
 invCont.buildByClassificationId = async (req, res) => {
     const classification_id = req.params.classificationId
-    const data = await getInventoryByClassificationId(classification_id)
+    const data = await getInventoryApprovedByClassificationId(classification_id)
     const grid = await utilities.buildClassificationGrid(data)
 
     const nav = await utilities.getNav()
@@ -140,7 +141,7 @@ invCont.editInventoryView = async (req, res) => {
     const inv_id = parseInt(req.params.itemId)
 
     const nav = await utilities.getNav()
-    const [itemData] = await getInventoryItemById(inv_id)
+    const [itemData] = await getInventoryItemById(inv_id, true)
     const classificationList = await utilities.buildClassificationList(itemData.classid)
 
     const itemName = `${itemData.make} ${itemData.model}`
@@ -193,7 +194,7 @@ invCont.updateInventory = async (req, res) => {
 
         req.flash("notice", "Sorry, update failed.")
 
-        return res.status(501).render("inventory/edit-inventory", {
+        return res.status(501).render("inventory/edit-vehicle", {
             title: `Edit ${itemName}`,
             nav,
             classificationList,
@@ -216,7 +217,7 @@ invCont.confirmDeletionView = async (req, res) => {
     const inv_id = parseInt(req.params.itemId)
 
     const nav = await utilities.getNav()
-    const [{ id, make, model, year, price }] = await getInventoryItemById(inv_id)
+    const [{ id, make, model, year, price }] = await getInventoryItemById(inv_id, true)
 
     return res.render("inventory/delete-confirm", {
         title: `Confirm Deletion`,
@@ -255,6 +256,168 @@ invCont.deleteVehicle = async (req, res) => {
             inv_model,
             inv_year,
             inv_price
+        })
+    }
+}
+
+invCont.buildAdminPanelView = async (req, res) => {
+    const nav = await utilities.getNav()
+
+    const invData = await getInventoryToApprove()
+    const classData = await getClassificationsToApprove()
+
+    const inventoryTable = utilities.buildTableList(invData, new TableListSettings('inventoryDisplay', 'Vehicle Name'))
+    const classificationTable = utilities.buildTableList(classData, new TableListSettings('classificationDisplay', 'Classification Name', 'type'))
+
+    return res.render("inventory/admin-panel", {
+        title: 'Admin Panel',
+        nav,
+        inventoryTable,
+        classificationTable,
+        errors: null
+    })
+}
+
+invCont.reviewInventoryView = async (req, res) => {
+    const inv_id = parseInt(req.params.itemId)
+
+    const nav = await utilities.getNav()
+    const [itemData] = await getInventoryItemById(inv_id, true)
+    const classificationList = await utilities.buildClassificationList(itemData.classid)
+
+    const itemName = `${itemData.make} ${itemData.model}`
+
+    return res.render("inventory/review-vehicle", {
+        title: `Review ${itemName}`,
+        nav,
+        classificationList,
+        inv_id: itemData.id,
+        inv_make: itemData.make,
+        inv_model: itemData.model,
+        inv_year: itemData.year,
+        inv_description: itemData.description,
+        inv_image: itemData.image,
+        inv_thumbnail: itemData.thumbnail,
+        inv_price: itemData.price,
+        inv_miles: itemData.miles,
+        inv_color: itemData.color,
+        inv_approval: itemData.approval,
+        errors: null
+    })
+}
+
+invCont.confirmInventory = async (req, res) => {
+    const nav = await utilities.getNav()
+    const { inv_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id, inv_approval } = req.body
+    const { account_id } = res.locals.accountData
+
+    const [confirmResult] = await confirmInventory(
+        inv_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color,
+        classification_id,
+        inv_approval,
+        account_id
+    )
+
+    if (confirmResult) {
+        const itemName = `${confirmResult.inv_make} ${confirmResult.inv_model}`
+
+        req.flash("notice", `The ${itemName} was confirmed.`)
+
+        return res.redirect("/inv/panel")
+    } else {
+        const classificationList = await utilities.buildClassificationList(classification_id)
+        const itemName = `${inv_make} ${inv_model}`
+
+        req.flash("notice", "Sorry, confirmation failed.")
+
+        return res.status(501).render("inventory/review-vehicle", {
+            title: `Review ${itemName}`,
+            nav,
+            classificationList,
+            errors: null,
+            inv_id,
+            inv_make,
+            inv_model,
+            inv_year,
+            inv_description,
+            inv_image,
+            inv_thumbnail,
+            inv_price,
+            inv_miles,
+            inv_color
+        })
+    }
+}
+
+invCont.reviewClassificationView = async (req, res) => {
+    const classification_id = parseInt(req.params.classificationId)
+
+    const nav = await utilities.getNav()
+    const [itemData] = await getClassificationById(classification_id)
+
+    return res.render("inventory/review-classification", {
+        title: `Review Classification`,
+        nav,
+        classification_id: itemData.id,
+        classification_name: itemData.name,
+        classification_approval: itemData.approval,
+        errors: null
+    })
+}
+
+invCont.deleteClassification = async (req, res) => {
+    const nav = await utilities.getNav()
+    const { classification_id, classification_name } = req.body
+
+    const deleteResult = await deleteClassification(classification_id)
+
+    if (deleteResult) {
+        req.flash("notice", `Classification was deleted.`)
+
+        return res.redirect("/inv/panel")
+    } else {
+
+        req.flash("notice", "Sorry, deletion failed.")
+
+        return res.status(501).render("inventory/review-classification", {
+            title: `Review Classification`,
+            nav,
+            errors: null,
+            classification_id,
+            classification_name
+        })
+    }
+}
+
+invCont.confirmClassification = async (req, res) => {
+    const nav = await utilities.getNav()
+    const { classification_id, classification_name, classification_approval } = req.body
+    const { account_id } = res.locals.accountData
+
+    const [confirmResult] = await confirmClassification(classification_id, classification_name, classification_approval, account_id)
+
+    if (confirmResult) {
+        req.flash("notice", `Classification confirmed.`)
+
+        return res.redirect("/inv/panel")
+    } else {
+        req.flash("notice", "Sorry, confirmation failed.")
+
+        return res.status(501).render("inventory/review-classification", {
+            title: `Review Classification`,
+            nav,
+            errors: null,
+            classification_id,
+            classification_name
         })
     }
 }

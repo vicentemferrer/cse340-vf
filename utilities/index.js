@@ -82,6 +82,19 @@ Util.buildClassificationList = async (classification_id = null) => {
     return classificationList
 }
 
+Util.buildTableList = (data, settings) => {
+    const dataTable = data.reduce((acc, { id, name }, i, arr) => {
+        acc += `<tr><td>${name}</td><td>&nbsp;</td><td>&nbsp;</td>`
+        acc += `<td><a href='/inv/review/${'innerLevel' in settings ? `${settings.innerLevel}/` : ''}${id}' title='Click to review' data-review><i class="fi fi-br-search-alt"></i>Review</a></td></tr>`
+
+        if (i === arr.length - 1) acc += '</tbody></table>'
+
+        return acc
+    }, `<table id='${settings.elementID}'><thead><tr><th>${settings.tableHeader}</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></thead><tbody>`)
+
+    return dataTable
+}
+
 Util.checkJWTToken = async (req, res, next) => {
     if (req.cookies.jwt) {
         jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET, (err, accountData) => {
@@ -113,6 +126,15 @@ Util.checkLogin = async (req, res, next) => {
 
 Util.checkCredentials = async (req, res, next) => {
     if (!res.locals.loggedin || res.locals.accountData["account_type"] === 'Client') {
+        req.flash("notice", "Please log with appropriate credentials.")
+        return res.redirect("/account/login")
+    }
+
+    next()
+}
+
+Util.checkAdmin = async (req, res, next) => {
+    if (!res.locals.loggedin || res.locals.accountData["account_type"] !== 'Admin') {
         req.flash("notice", "Please log with appropriate credentials.")
         return res.redirect("/account/login")
     }

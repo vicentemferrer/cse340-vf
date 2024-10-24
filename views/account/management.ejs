@@ -22,3 +22,9 @@
         <p><a href="/inv">Access <i class="fi fi-br-arrow-up-right-from-square"></i></a></p>
     </section>
     <% } %>
+        <% if (locals.accountData.account_type==='Admin' ) { %>
+            <section class="management">
+                <h3>Admin Panel</h3>
+                <p><a href="/inv/panel">Access <i class="fi fi-br-arrow-up-right-from-square"></i></a></p>
+            </section>
+            <% } %>

@@ -1,0 +1,34 @@
+<h1><%- title %></h1>
+<section class="messages">
+    <%- messages() %>
+        <% if (errors) { %>
+            <ul class="notice">
+                <% errors.array().forEach(error=> { %>
+                    <li>
+                        <%= error.msg %>
+                    </li>
+                    <% }) %>
+            </ul>
+            <% } %>
+</section>
+<form action="/inv/type/delete" method="post">
+    <label>Classification name*
+        <input type="text" name="classification_name" id="classification_name" value="<%- locals.classification_name %>"
+            pattern="^[A-Za-z]+$" required autofocus>
+        <span>(Name must be alphabetic characters only)</span>
+    </label>
+    <fieldset>
+        <legend>Classification Approval</legend>
+        <label>
+            <input type="checkbox" data-modifier="classification" name="classification_approval"
+                id="classification_approval" class="sbs" value="true">
+            Approved
+        </label>
+    </fieldset>
+    <button class="dark" disabled>Reject Classification</button>
+    <input type="hidden" name="classification_id" <% if(locals.classification_id) { %> value="<%=
+        locals.classification_id %>" <% } %>>
+</form>
+
+<script type="module" src="../../../js/inv-update.js"></script>
+<script type="module" src="../../../js/approveOrReject.js"></script>

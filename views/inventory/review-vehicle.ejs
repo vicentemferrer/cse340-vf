@@ -12,7 +12,7 @@
                 </ul>
                 <% } %>
     </section>
-    <form action="/inv/update" method="post">
+    <form action="/inv/delete" method="post">
         <label>Classification*
             <%- classificationList %>
         </label>
@@ -48,8 +48,16 @@
             <input type="text" name="inv_color" id="inv_color" pattern="^[A-Za-z]{3,}$" value="<%- locals.inv_color %>"
                 required>
         </label>
-        <button class="dark" disabled>Update Vehicle</button>
+        <fieldset>
+            <legend>Item Approval</legend>
+            <label>
+                <input type="checkbox" data-modifier="inventory" name="inv_approval" id="inv_approval" class="sbs"
+                    value="true"> Approved
+            </label>
+        </fieldset>
+        <button class="dark" disabled>Reject Vehicle</button>
         <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" <% } %>>
     </form>
 
     <script type="module" src="../../../js/inv-update.js"></script>
+    <script type="module" src="../../../js/approveOrReject.js"></script>
