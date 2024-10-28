@@ -1,7 +1,7 @@
 const { body, validationResult } = require("express-validator")
 
 const { getNav } = require(".")
-const { checkExistingEmail, checkCurrentPassword } = require("../models/account-model")
+const { checkExistingEmail } = require("../models/account-model")
 
 const validate = {}
 
